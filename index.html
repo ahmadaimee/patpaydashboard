@@ -1,0 +1,2509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0b1f3a" />
+<meta name="color-scheme" content="dark" />
+<meta name="format-detection" content="telephone=no" />
+
+<title>PatriotPay.ai — AI-Powered Patient Billing | Patient Billing. Resolved.</title>
+<meta name="description" content="PatriotPay.ai uses AI to predict, engage, assist, and resolve every patient balance — in 100+ languages, fully HIPAA-compliant, integrated with your existing PM/EHR." />
+<meta name="keywords" content="patient billing, AI billing, healthcare revenue cycle, RCM, patient payment, medical billing software, HIPAA" />
+<meta name="author" content="PatriotPay.ai" />
+<link rel="canonical" href="https://patriotpay.ai/" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://patriotpay.ai/" />
+<meta property="og:site_name" content="PatriotPay.ai" />
+<meta property="og:title" content="PatriotPay.ai — Patient Billing. Resolved." />
+<meta property="og:description" content="The AI platform for patient billing. Predict. Engage. Assist. Resolve." />
+<meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=85" />
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="PatriotPay.ai — Patient Billing. Resolved." />
+<meta name="twitter:description" content="The AI platform for patient billing. Predict. Engage. Assist. Resolve." />
+
+<!-- Performance: preconnect to every external origin used on first paint -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+<link rel="preconnect" href="https://unpkg.com" crossorigin />
+<link rel="dns-prefetch" href="https://images.unsplash.com" />
+<link rel="dns-prefetch" href="https://unpkg.com" />
+
+<!-- Preload the hero photograph so it paints with the first frame -->
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2400&q=90" media="(min-width: 901px)" />
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80" media="(max-width: 900px)" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" />
+<style>
+  :root {
+    /* Backgrounds — keep the dark cosmic void (atmosphere stays) */
+    --void: #02010a;
+    --deep: #08051f;
+    --nebula: #0b1f3a;          /* PatriotPay graphite */
+    /* Accents remapped to PatriotPay.ai brand */
+    --plasma: #D4AF37;          /* PatriotPay gold (primary) */
+    --supernova: #e8c25a;       /* warm gold highlight */
+    --star: #f5e7b3;            /* pale gold */
+    --quasar: #4A8FD4;          /* PatriotPay blue (secondary) */
+    --magnet: #6BA8DC;          /* lighter blue */
+    --cloud: #eef3fa;           /* PatriotPay cloud */
+    --display: 'Cormorant Garamond', serif;
+    --sans: 'Space Grotesk', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body {
+    background: var(--void);
+    color: var(--cloud);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;        /* Some iOS Safari versions need this for overflow-x: hidden to apply */
+  }
+  /* Defensive — only wrap long unbroken strings (URLs/emails) where they
+     occur, not aggressively across all text (which mangled headings). */
+  .foot-grid a, .foot-grid p { overflow-wrap: anywhere; }
+  a { color: inherit; text-decoration: none; }
+
+  #bg {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+
+  /* Real NASA Earth-from-ISS photograph — hero background.
+     Sits above the 3D canvas, fades out as the user scrolls into the void. */
+  .hero-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background-image:
+      linear-gradient(180deg, rgba(6,21,40,0.4) 0%, rgba(6,21,40,0) 25%, rgba(6,21,40,0) 55%, rgba(6,21,40,0.6) 100%),
+      url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2400&q=90');
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    will-change: opacity, transform;
+    opacity: 1;
+    transition: opacity 0.05s linear;
+  }
+  /* Subtle Ken-Burns drift on the hero photo */
+  @keyframes heroDrift {
+    0%   { transform: scale(1.04) translate(0, 0); }
+    50%  { transform: scale(1.08) translate(-1%, -1%); }
+    100% { transform: scale(1.04) translate(0, 0); }
+  }
+  .hero-bg { animation: heroDrift 28s ease-in-out infinite; }
+
+  /* Vignette overlay */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background:
+      radial-gradient(ellipse at center, transparent 40%, rgba(2,1,10,0.55) 85%, rgba(2,1,10,0.92) 100%);
+  }
+
+  /* Film grain */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+    mix-blend-mode: overlay;
+    animation: grain 8s steps(6) infinite;
+  }
+  @keyframes grain {
+    0%,100% { transform: translate(0,0); }
+    20% { transform: translate(-2%, 2%); }
+    40% { transform: translate(2%, -1%); }
+    60% { transform: translate(-1%, -2%); }
+    80% { transform: translate(1%, 2%); }
+  }
+
+  .app { position: relative; z-index: 4; width: 100%; max-width: 100vw; }
+  /* overflow-x: hidden lives only on html/body — applying it to .app would
+     create a containing block that could clip the fixed-position menu panel
+     on some browsers. */
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 24px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    background: linear-gradient(180deg, rgba(2,1,10,0.7) 0%, rgba(2,1,10,0.2) 100%);
+    border-bottom: 1px solid rgba(212,175,55,0.2);
+  }
+  .brand {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: 0.18em;
+    color: var(--star);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .brand .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--plasma);
+    box-shadow: 0 0 16px var(--plasma), 0 0 32px var(--plasma);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.7; }
+  }
+  .nav ul { list-style: none; display: flex; gap: 36px; }
+  .nav ul a {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(232,236,255,0.7);
+    padding: 6px 0;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .nav ul a:hover { color: var(--quasar); }
+  .nav ul a::before {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 1px;
+    background: linear-gradient(90deg, var(--plasma), var(--quasar));
+    transition: width 0.4s;
+  }
+  .nav ul a:hover::before { width: 100%; }
+  .launch {
+    padding: 10px 22px;
+    border: 1px solid rgba(212,175,55,0.5);
+    border-radius: 999px;
+    color: var(--star);                                              /* pale-gold text */
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    background: rgba(212,175,55,0.12);                               /* glass tint */
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+    transition: all 0.3s;
+    font-weight: 600;
+  }
+  .launch:hover {
+    background: rgba(212,175,55,0.22);
+    border-color: var(--plasma);
+    color: var(--star);
+    box-shadow:
+      0 0 30px rgba(212,175,55,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.22);
+  }
+
+  /* HUD */
+  .hud {
+    position: fixed;
+    z-index: 40;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: rgba(74,143,212,0.65);
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+  .hud.tl { top: 100px; left: 32px; }
+  .hud.bl { bottom: 32px; left: 32px; }
+  .hud.br { bottom: 32px; right: 32px; text-align: right; }
+  .hud .row { margin-bottom: 4px; }
+  .hud .v { color: var(--star); }
+  .hud .bar {
+    margin-top: 8px;
+    width: 120px; height: 2px;
+    background: rgba(74,143,212,0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .hud .bar::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 30%;
+    background: var(--quasar);
+    box-shadow: 0 0 8px var(--quasar);
+    animation: scan 3s linear infinite;
+  }
+  @keyframes scan {
+    0% { left: -30%; } 100% { left: 100%; }
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    min-height: 100vh;
+    padding: 140px 8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .container { max-width: 1280px; margin: 0 auto; width: 100%; }
+
+  .chapter {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--plasma);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .chapter::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--plasma);
+    box-shadow: 0 0 12px var(--plasma);
+  }
+
+  h1.hero-title {
+    font-family: var(--display);
+    font-size: clamp(64px, 12vw, 200px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--cloud);
+    margin-bottom: 36px;
+  }
+  h1.hero-title em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--star), var(--plasma), var(--quasar));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  h2.title {
+    font-family: var(--display);
+    font-size: clamp(48px, 7vw, 104px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--cloud);
+    margin-bottom: 32px;
+  }
+  h2.title em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--quasar), var(--magnet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .lede {
+    font-size: clamp(17px, 1.5vw, 22px);
+    line-height: 1.65;
+    color: rgba(232,236,255,0.75);
+    max-width: 620px;
+    font-weight: 300;
+    margin-bottom: 36px;
+  }
+  p { line-height: 1.7; color: rgba(232,236,255,0.72); }
+
+  .btn-row { display: flex; gap: 18px; flex-wrap: wrap; }
+  .btn {
+    padding: 16px 36px;
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transition: all 0.4s;
+    cursor: pointer;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+    /* Glassmorphism — frosted surface for every button */
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    color: var(--star);          /* Pale-gold text — matches the "Predict / Engage / Assist" headings */
+  }
+  .btn.primary {
+    background: rgba(212, 175, 55, 0.18);
+    border-color: rgba(212, 175, 55, 0.45);
+    color: var(--star);
+    box-shadow:
+      0 0 40px rgba(212,175,55,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.15);
+    font-weight: 700;
+  }
+  .btn.primary:hover {
+    transform: translateY(-3px);
+    background: rgba(212, 175, 55, 0.28);
+    border-color: rgba(212, 175, 55, 0.65);
+    box-shadow:
+      0 0 60px rgba(212,175,55,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+  .btn.ghost {
+    background: rgba(74, 143, 212, 0.08);
+    border-color: rgba(74,143,212,0.5);
+    color: var(--star);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .btn.ghost:hover {
+    border-color: var(--quasar);
+    background: rgba(74,143,212,0.18);
+    box-shadow:
+      0 0 30px rgba(74,143,212,0.35),
+      inset 0 1px 0 rgba(255,255,255,0.12);
+  }
+
+  /* Telemetry / stats */
+  .telemetry {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 40px;
+    margin-top: 80px;
+    padding: 36px 40px;
+    border-radius: 24px;
+    /* Frosted glass slab */
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  /* Center every stat cell inside the telemetry slab */
+  .telemetry > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .telemetry .v {
+    font-family: var(--display);
+    font-size: 52px;
+    font-weight: 400;
+    font-style: italic;
+    background: linear-gradient(135deg, var(--quasar), var(--star));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+  .telemetry .l {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(232,236,255,0.55);
+    margin-top: 10px;
+  }
+
+  /* Phenomena grid */
+  .phenomena {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin-top: 48px;
+  }
+  .phenomenon {
+    padding: 36px 30px;
+    background: rgba(212, 175, 55, 0.2);  /* #d4af3733 — PatriotPay gold @ 20% */
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(.2,.8,.2,1);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+  }
+  .phenomenon::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--plasma), transparent 30%, transparent 70%, var(--quasar));
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .phenomenon:hover::before { opacity: 1; }
+  .phenomenon:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 70px rgba(212,175,55,0.22);
+  }
+  .phenomenon .idx {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--plasma);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .phenomenon h3 {
+    font-family: var(--display);
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--star);
+    margin-bottom: 14px;
+    line-height: 1.1;
+  }
+  .phenomenon h3 em { font-style: italic; color: var(--quasar); }
+  .phenomenon p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(232,236,255,0.7);
+  }
+  .phenomenon .glow {
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.25;
+    bottom: -60px; right: -60px;
+    transition: transform 0.6s;
+  }
+  .phenomenon:hover .glow { transform: scale(1.4); opacity: 0.4; }
+  .phenomenon.p1 .glow { background: var(--plasma); }
+  .phenomenon.p2 .glow { background: var(--quasar); }
+  .phenomenon.p3 .glow { background: var(--magnet); }
+  .phenomenon.p4 .glow { background: var(--supernova); }
+  .phenomenon.p5 .glow { background: var(--star); }
+  .phenomenon.p6 .glow { background: var(--plasma); }
+
+  /* Two-column */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 48px;
+  }
+  @media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: 40px; } }
+  .right-aligned { text-align: right; }
+  .right-aligned .lede, .right-aligned .chapter { margin-left: auto; }
+  .right-aligned .btn-row { justify-content: flex-end; }
+  .right-aligned .chapter::before { display: none; }
+  .right-aligned .chapter::after {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--plasma);
+    box-shadow: 0 0 12px var(--plasma);
+    margin-left: 14px;
+  }
+
+  /* Mission timeline */
+  .timeline {
+    margin-top: 48px;
+    border-left: 1px solid rgba(212,175,55,0.35);
+    padding-left: 40px;
+    display: grid;
+    gap: 36px;
+  }
+  .mission {
+    position: relative;
+    padding-bottom: 20px;
+  }
+  .mission::before {
+    content: '';
+    position: absolute;
+    left: -47px; top: 6px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--void);
+    border: 2px solid var(--quasar);
+    box-shadow: 0 0 12px var(--quasar);
+  }
+  .mission .when {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--quasar);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .mission h4 {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--star);
+    margin-bottom: 8px;
+  }
+  .mission h4 em { font-style: italic; color: var(--plasma); }
+  .mission p { font-size: 14px; max-width: 580px; }
+
+  /* CTA section */
+  .cta-final {
+    text-align: center;
+    padding: 200px 8vw 100px;
+  }
+  .cta-final h2 { margin-left:auto;margin-right:auto; }
+  .cta-final .lede { margin-left: auto; margin-right: auto; }
+  .cta-final .btn-row { justify-content: center; }
+
+  /* Newsletter */
+  .signal {
+    margin: 60px auto 0;
+    max-width: 620px;
+    display: flex;
+    gap: 14px;
+    align-items: stretch;
+  }
+  .signal input {
+    flex: 1;
+    padding: 16px 28px;
+    /* Glassmorphism */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 999px;                          /* full pill */
+    color: var(--star);
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    outline: none;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    transition: all 0.3s;
+  }
+  .signal input::placeholder {
+    color: rgba(245, 231, 179, 0.45);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  .signal input:focus {
+    border-color: rgba(212, 175, 55, 0.7);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 0 30px rgba(212,175,55,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.12);
+  }
+  .signal button {
+    padding: 10px 26px;                            /* matches nav .launch pill proportions */
+    background: rgba(212, 175, 55, 0.12);          /* glass-gold tint, same as .launch */
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    color: var(--star);                            /* pale-gold text */
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border-radius: 999px;                          /* full pill */
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .signal button:hover {
+    background: rgba(212, 175, 55, 0.22);
+    border-color: var(--plasma);
+    box-shadow:
+      0 0 30px rgba(212,175,55,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.22);
+  }
+
+  /* Footer */
+  footer {
+    padding: 80px 8vw 40px;
+    border-top: 1px solid rgba(212,175,55,0.22);
+    background: linear-gradient(180deg, transparent, rgba(8,5,31,0.7));
+    position: relative;
+    z-index: 4;
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 50px;
+  }
+  /* 4 → 2 cols below 1024px (avoids cramped 4-cols between 800–1024) */
+  @media (max-width: 1024px) { .foot-grid { grid-template-columns: 1fr 1fr; gap: 36px; } }
+  .foot-grid h5 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--plasma);
+    margin-bottom: 18px;
+  }
+  .foot-grid a {
+    display: block;
+    padding: 4px 0;
+    font-size: 13px;
+    color: rgba(232,236,255,0.65);
+    transition: color 0.3s;
+  }
+  .foot-grid a:hover { color: var(--quasar); }
+  .foot-bot {
+    padding-top: 24px;
+    border-top: 1px solid rgba(74,143,212,0.12);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(232,236,255,0.4);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Scroll indicator */
+  .scroll-ind {
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(232,236,255,0.5);
+    text-align: center;
+    transition: opacity 0.4s;
+  }
+  .scroll-ind .line {
+    width: 1px; height: 50px;
+    background: linear-gradient(180deg, transparent, var(--quasar));
+    margin: 14px auto 0;
+    animation: scrollLine 2.2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* Mobile menu toggle (hamburger) — only visible below 900px */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 22px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 60;
+  }
+  .menu-toggle span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--star);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+  body.menu-open .menu-toggle span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+  body.menu-open .menu-toggle span:nth-child(2) { opacity: 0; }
+  body.menu-open .menu-toggle span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+  body.menu-open { overflow: hidden; }                  /* lock scroll while menu is open */
+
+  /* ===== Mobile breakpoint ===== */
+  @media (max-width: 900px) {
+    /* Nav sits ABOVE the menu panel so brand + hamburger stay visible */
+    .nav { padding: 12px 18px; z-index: 60; }
+    .nav .launch { display: none; }            /* CTA moves into the menu panel */
+    .menu-toggle { display: flex; }
+    .brand { font-size: 17px; gap: 8px; }      /* shrink wordmark so it can't push the hamburger off-screen */
+    .brand .dot { width: 8px; height: 8px; }
+
+    /* Menu panel sits BELOW the nav bar — brand + hamburger stay clickable.
+       Visibility is toggled via `visibility` (not transform alone) so the
+       overflow-x: hidden on body/.app can never accidentally clip it. */
+    .nav ul {
+      display: flex !important;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      position: fixed;
+      top: 56px;                                /* below the compact mobile nav bar */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      margin: 0;
+      padding: 24px 24px 40px;
+      background: rgba(6, 21, 40, 0.97);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      z-index: 58;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-12px);
+      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+      pointer-events: none;
+      overflow-y: auto;
+      list-style: none;
+    }
+    body.menu-open .nav ul {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important;
+      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0s;
+    }
+    .nav ul li { border-bottom: 1px solid rgba(212,175,55,0.15); list-style: none; }
+    .nav ul li a {
+      display: block;
+      padding: 22px 0;                          /* 44px+ touch target */
+      font-size: 14px;
+      color: var(--star);
+    }
+    .nav ul li a::before { display: none; }
+
+    .hud, .scroll-ind { display: none; }
+    section { padding: 90px 5vw 56px; }
+    .container { padding: 0; }
+
+    /* Typography — prevent horizontal overflow on the smallest phones */
+    h1.hero-title { font-size: clamp(40px, 11vw, 72px); line-height: 0.96; letter-spacing: -0.03em; }
+    h2.title      { font-size: clamp(30px, 7vw, 52px); }
+    .lede         { font-size: 15px; }
+    .chapter      { font-size: 10px; }
+
+    /* Telemetry */
+    .telemetry { padding: 22px 18px; gap: 22px; border-radius: 18px; }
+    .telemetry .v { font-size: 34px; }
+
+    /* Cards */
+    .phenomena { gap: 14px; }
+    .phenomenon { padding: 24px 20px; border-radius: 16px; }
+    .phenomenon h3 { font-size: 24px; }
+
+    /* Newsletter form — input on top, button below */
+    .signal { flex-wrap: wrap; gap: 10px; }
+    .signal input { flex: 1 1 100%; padding: 14px 22px; }
+    .signal button { flex: 1 1 100%; padding: 14px 22px; }
+
+    /* Disable expensive GPU effects on mobile */
+    .btn, .launch, .signal button, .signal input {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    .btn::after,
+    .launch::after,
+    .signal button::after,
+    .phenomenon::after,
+    .telemetry::after {
+      animation: none !important;
+      filter: none !important;
+      background: linear-gradient(135deg, rgba(212,175,55,0.5), rgba(74,143,212,0.35)) !important;
+    }
+    body::before { display: none; }
+    .brand .dot { animation: none; opacity: 0.9; }
+    .hero-bg    { animation: none; }
+
+    /* Footer — long emails wrap, columns relax */
+    footer { padding: 60px 5vw 30px; }
+    .foot-grid { gap: 32px; }
+    .foot-grid a, .foot-grid p { overflow-wrap: anywhere; word-break: break-word; }
+    .foot-bot { font-size: 10px; flex-direction: column; align-items: flex-start; gap: 6px; }
+  }
+
+  /* ===== Very narrow phones (≤500px) — collapse footer to one column ===== */
+  @media (max-width: 500px) {
+    .foot-grid { grid-template-columns: 1fr; gap: 28px; }
+    section { padding: 80px 5vw 48px; }
+    h1.hero-title { font-size: clamp(36px, 12vw, 64px); }
+    .telemetry { padding: 20px 16px; gap: 18px; }
+    .telemetry .v { font-size: 30px; }
+    .phenomenon { padding: 22px 18px; }
+    .phenomenon h3 { font-size: 22px; }
+    .brand { font-size: 15px; }
+    .nav { padding: 10px 14px; }
+  }
+
+  /* Respect user reduced-motion preference everywhere */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    body::before, .hero-bg { animation: none !important; }
+  }
+
+  /* ============================================================
+     COSMIC TRAILING BORDER
+     A glowing arc orbits the perimeter of every button + card,
+     leaving a comet-like fading tail behind. Uses a registered
+     custom property so the conic-gradient angle is GPU-animatable.
+  ============================================================ */
+  @property --cosmic-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  .btn, .launch, .signal button, .phenomenon, .telemetry { position: relative; }
+
+  .btn::after,
+  .launch::after,
+  .signal button::after,
+  .phenomenon::after,
+  .telemetry::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--cosmic-angle),
+      transparent 0deg 268deg,
+      rgba(212, 175, 55, 0.12) 282deg,
+      var(--plasma) 318deg,
+      var(--star)   348deg,
+      var(--quasar) 358deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+            mask-composite: exclude;
+    animation: cosmic-trail 5s linear infinite;
+    pointer-events: none;
+    z-index: 2;
+    /* Soft outer glow that follows the brightest tail tip */
+    filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.45));
+  }
+
+  /* Cards + telemetry slab get a slightly thicker border so the trail reads at distance */
+  .phenomenon::after,
+  .telemetry::after { padding: 2px; filter: drop-shadow(0 0 6px rgba(212,175,55,0.5)); }
+  .telemetry::after { animation-duration: 8s; }   /* slower orbit on the wide slab */
+
+  /* Stagger card trails so they don't move in lockstep */
+  .phenomena .phenomenon:nth-child(2)::after { animation-delay: -1.25s; }
+  .phenomena .phenomenon:nth-child(3)::after { animation-delay: -2.50s; }
+  .phenomena .phenomenon:nth-child(4)::after { animation-delay: -3.75s; }
+
+  /* Slightly slower, more deliberate orbit on the larger cards */
+  .phenomenon::after { animation-duration: 6s; }
+
+  /* Speed up + brighten the trail on hover */
+  .btn:hover::after,
+  .launch:hover::after,
+  .phenomenon:hover::after {
+    animation-duration: 2.5s;
+    filter: drop-shadow(0 0 10px rgba(212,175,55,0.85));
+  }
+
+  @keyframes cosmic-trail {
+    to { --cosmic-angle: 360deg; }
+  }
+</style>
+
+<!-- SVG favicon (no extra request) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b1f3a'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%23D4AF37'/%3E%3C/svg%3E" />
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PatriotPay.ai",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web",
+  "description": "AI-powered patient billing platform that predicts payment behavior, engages patients via SMS in 100+ languages, and resolves balances faster.",
+  "url": "https://patriotpay.ai/",
+  "offers": { "@type": "Offer", "priceCurrency": "USD" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "PatriotPay.ai",
+    "email": "cashflow@patriotpay.ai",
+    "address": { "@type": "PostalAddress", "addressLocality": "Manchester", "addressRegion": "NH", "addressCountry": "US" }
+  }
+}
+</script>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="hero-bg" id="hero-bg"></div>
+
+<div class="hud tl">
+  <div class="row">DIVISION ▸ <span class="v" id="sector">PATIENT BILLING</span></div>
+  <div class="row">SCROLL ▸ <span class="v" id="scroll-pct">0%</span></div>
+  <div class="bar"></div>
+</div>
+<div class="hud bl">
+  <div class="row">BALANCES RESOLVED ▸ <span class="v" id="flux">1,204,872</span></div>
+  <div class="row">COLLECTION VELOCITY ▸ <span class="v">+27.4%</span></div>
+  <div class="row">CHRONO STATE ▸ <span class="v" id="chrono">04:21:09</span></div>
+</div>
+<div class="hud br">
+  <div class="row">STATUS ▸ <span class="v">LIVE</span></div>
+  <div class="row">PATRIOTPAY v7.3 · HIPAA</div>
+</div>
+
+<div class="scroll-ind" id="scroll-ind">
+  Scroll to Begin
+  <div class="line"></div>
+</div>
+
+<div class="app">
+  <nav class="nav">
+    <a href="#hero" class="brand"><span class="dot"></span> PATRIOTPAY<span style="opacity:0.5;font-size:14px;letter-spacing:0.1em;">.AI</span></a>
+    <ul id="nav-links">
+      <li><a href="#observatory">Problem</a></li>
+      <li><a href="#phenomena">Platform</a></li>
+      <li><a href="#mission">Implementation</a></li>
+      <li><a href="#archive">Results</a></li>
+      <li><a href="#transmit">Contact</a></li>
+    </ul>
+    <a href="#transmit" class="launch">Request Demo</a>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false"
+            onclick="var o=document.body.classList.toggle('menu-open');this.setAttribute('aria-expanded',o);">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <section id="hero">
+    <div class="container">
+      <div class="chapter">Chapter 00 — Patient Billing</div>
+      <h1 class="hero-title">Patient<br/>Billing.<br/><em>Resolved.</em></h1>
+      <p class="lede">PatriotPay.ai uses artificial intelligence to identify the right path for every patient balance, engage patients with clarity in 100+ languages, and move accounts toward resolution — without adding billing staff or changing your existing systems.</p>
+      <div class="btn-row">
+        <a href="#transmit" class="btn primary">Request My Demo →</a>
+        <a href="#phenomena" class="btn ghost">Explore the Platform</a>
+      </div>
+      <div class="telemetry">
+        <div><div class="v">$1.2B+</div><div class="l">Balances Processed</div></div>
+        <div><div class="v">+27%</div><div class="l">Avg Collections Lift</div></div>
+        <div><div class="v">3 wks</div><div class="l">Time to Go Live</div></div>
+        <div><div class="v">100+</div><div class="l">PM / EHR Integrations</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="observatory">
+    <div class="container">
+      <div class="split">
+        <div>
+          <div class="chapter">Chapter 01 — The Singularity</div>
+          <h2 class="title">A broken system<br/><em>devours</em> revenue<br/>at the center.</h2>
+          <p class="lede">Patient billing is not a statement problem. It is a strategy problem. Most billing systems treat every balance the same — same statement, same timing, same message, same result. Patients are confused, staff are burdened, and balances age into collections instead of moving toward resolution. PatriotPay.ai changes that.</p>
+          <div class="btn-row">
+            <a href="#phenomena" class="btn ghost">See How We Fix It</a>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="phenomena">
+    <div class="container">
+      <div class="right-aligned">
+        <div class="chapter">Chapter 02 — The Platform</div>
+        <h2 class="title">Four pillars of<br/><em>intelligent billing.</em></h2>
+        <p class="lede">One AI platform that covers every stage of the patient billing lifecycle — from the moment a balance posts to the moment it closes. Predict. Engage. Assist. Resolve.</p>
+      </div>
+      <div class="phenomena">
+        <div class="phenomenon p1">
+          <div class="idx">PILLAR · 01</div>
+          <h3>Predict <em>to Pay.</em></h3>
+          <p>Score every patient balance using AI trained on behavioral, financial, and clinical signals. Determine the optimal path, timing, and channel before the first message is ever sent.</p>
+          <div class="glow"></div>
+        </div>
+        <div class="phenomenon p2">
+          <div class="idx">PILLAR · 02</div>
+          <h3>Engage <em>at Scale.</em></h3>
+          <p>Personalized, compliance-safe SMS and email outreach. Every message tailored to the patient's balance, status, and behavior — in 100+ languages, never a generic blast.</p>
+          <div class="glow"></div>
+        </div>
+        <div class="phenomenon p3">
+          <div class="idx">PILLAR · 03</div>
+          <h3>Assist <em>24/7.</em></h3>
+          <p>An AI billing agent that explains balances in plain language, processes payments, and routes complex cases to your team — with full context intact.</p>
+          <div class="glow"></div>
+        </div>
+        <div class="phenomenon p4">
+          <div class="idx">PILLAR · 04</div>
+          <h3>Resolve <em>Every Loop.</em></h3>
+          <p>Post-engagement workflows that track payments, manage plans, route financial assistance candidates, and flag accounts before they age into bad debt.</p>
+          <div class="glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mission">
+    <div class="container">
+      <div class="chapter">Chapter 03 — Implementation</div>
+      <h2 class="title">From contract<br/>to live in <em>weeks.</em></h2>
+      <p class="lede">Patriot Pay fits into your existing workflow without forcing a major IT project. Our Onboarding team handles the heavy lifting — connection, mapping, training, and go-live visibility from day one.</p>
+      <div class="timeline">
+        <div class="mission">
+          <div class="when">Week 1 · Configuration</div>
+          <h4>Secure <em>Connection</em></h4>
+          <p>PatriotPay connects to your existing practice management and EHR platform through a HIPAA-secure real-time balance and patient data sync. No rip-and-replace. No migration. No heavy IT lift.</p>
+        </div>
+        <div class="mission">
+          <div class="when">Week 2 · Field Mapping</div>
+          <h4>Strategy <em>Calibration</em></h4>
+          <p>Our team maps your A/R fields, configures your billing strategy, and sets the rules for how PatriotPay segments and prioritizes your patient population.</p>
+        </div>
+        <div class="mission">
+          <div class="when">Week 3 · Go Live</div>
+          <h4>Launch <em>Live</em></h4>
+          <p>PatriotPay begins processing balances automatically. Most practices are fully live within 3 weeks. Day-one live dashboards track outreach, engagement, payments, and resolution performance.</p>
+        </div>
+        <div class="mission">
+          <div class="when">Day 30 · First Cycle</div>
+          <h4>Balance <em>Recovery</em></h4>
+          <p>Outstanding patient balances recovered during the first 30 days post-deployment. Real-time visibility into A/R priority, payment lift, and patient engagement.</p>
+        </div>
+        <div class="mission">
+          <div class="when">Ongoing · Optimization</div>
+          <h4>Monitor & <em>Tune</em></h4>
+          <p>The AI continuously refines its scoring as your patient population engages. Each cycle is more accurate than the last — staff focus on the cases that need humans, the platform handles the rest.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="archive">
+    <div class="container">
+      <div class="chapter">Chapter 04 — Results</div>
+      <h2 class="title">Real practices.<br/><em>Real numbers.</em></h2>
+      <p class="lede">Our partners across healthcare are turning slow receivables into real revenue while improving the patient experience. Results represent actual client outcomes.</p>
+      <div class="phenomena">
+        <div class="phenomenon p2">
+          <div class="idx">CASE · 01</div>
+          <h3>$80K+ / <em>month.</em></h3>
+          <p>Granite State Gastroenterology grew from $5K to $50K in 60 days. Now averaging $80K+ per month in patient collections on a sustained basis.</p>
+          <div class="glow"></div>
+        </div>
+        <div class="phenomenon p3">
+          <div class="idx">CASE · 02</div>
+          <h3>+27% <em>sustained.</em></h3>
+          <p>New England Orthopedic achieved a sustained 27% lift in patient collections over six months — within 60 days of PatriotPay deployment.</p>
+          <div class="glow"></div>
+        </div>
+        <div class="phenomenon p4">
+          <div class="idx">CASE · 03</div>
+          <h3>Q1 <em>recovery.</em></h3>
+          <p>Mid-State Health Center recovered outstanding patient balances during the first quarter after PatriotPay went live — without adding billing headcount.</p>
+          <div class="glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="transmit" class="cta-final">
+    <div class="container">
+      <div class="chapter" style="justify-content:center;">Chapter 05 — Begin</div>
+      <h2 class="title">Stop chasing payments.<br/>Start <em>resolving balances.</em></h2>
+      <p class="lede">Schedule a personalized demo and see how PatriotPay.ai fits into your existing workflow. Real conversation, real A/R examples, transparent pricing — we'll reach out within one business day.</p>
+      <form class="signal" onsubmit="event.preventDefault(); this.querySelector('input').value='✓ Demo Request Received — we will reach out within 1 business day'; this.querySelector('input').disabled = true;">
+        <input type="email" placeholder="your.work@email.com" required />
+        <button type="submit">Request Demo</button>
+      </form>
+      <div class="btn-row" style="justify-content:center;margin-top:60px;">
+        <a href="mailto:cashflow@patriotpay.ai" class="btn ghost">Or email cashflow@patriotpay.ai</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:18px;"><span class="dot"></span> PATRIOTPAY<span style="opacity:0.5;font-size:14px;letter-spacing:0.1em;">.AI</span></div>
+        <p style="font-size:13px;max-width:340px;color:rgba(232,236,255,0.6);">The AI platform for patient billing. Predict. Engage. Assist. Resolve. HIPAA-compliant. Made in the USA.</p>
+        <p style="font-size:11px;margin-top:18px;letter-spacing:0.2em;text-transform:uppercase;color:var(--plasma);font-family:var(--mono);">Manchester, NH · Mon–Fri 7a–5p ET</p>
+      </div>
+      <div>
+        <h5>Platform</h5>
+        <a href="#observatory">The Problem</a>
+        <a href="#phenomena">Solution</a>
+        <a href="#phenomena">Integrations</a>
+        <a href="#phenomena">For Patients</a>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <a href="#archive">Results</a>
+        <a href="#mission">Implementation</a>
+        <a href="#transmit">About</a>
+        <a href="#transmit">Careers</a>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <a href="#transmit">Request Demo</a>
+        <a href="mailto:cashflow@patriotpay.ai">cashflow@patriotpay.ai</a>
+        <a href="mailto:support@patriotpay.ai">support@patriotpay.ai</a>
+        <a href="#transmit">Privacy & HIPAA</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2026 PatriotPay.ai · HIPAA Compliant · SOC 2 Type II</span>
+      <span>The AI platform for patient billing resolution.</span>
+    </div>
+  </footer>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer }   from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass }       from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass }  from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass }       from 'three/addons/postprocessing/OutputPass.js';
+
+/* ============================================================
+   GALACTIC 3D SCENE — HYPER-REALISTIC
+============================================================ */
+/* Mobile detection — used to gate the most expensive GPU effects.
+   Desktops keep full bloom + retina rendering; phones get a leaner pipeline. */
+const IS_MOBILE = window.matchMedia('(max-width: 900px)').matches;
+
+const canvas = document.getElementById('bg');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: !IS_MOBILE, alpha: false });
+// Phones cap DPR to 1 → ~4× fewer fragments shaded per frame
+renderer.setPixelRatio(IS_MOBILE ? 1 : Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+/* Swap the hero photograph for a smaller variant on mobile (saves ~450 KB). */
+{
+  const hero = document.getElementById('hero-bg');
+  if (hero && IS_MOBILE) {
+    hero.style.backgroundImage =
+      `linear-gradient(180deg, rgba(6,21,40,0.4) 0%, rgba(6,21,40,0) 25%, rgba(6,21,40,0) 55%, rgba(6,21,40,0.6) 100%),` +
+      ` url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80')`;
+  }
+}
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.88;       // slight lift so Earth's day-side reads
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const scene = new THREE.Scene();
+scene.fog = null;
+
+/* --- Real NASA/ESO Milky Way cubemap as scene background (hyper-realistic deep space) --- */
+const cubeLoader = new THREE.CubeTextureLoader()
+  .setPath('https://unpkg.com/three@0.160.0/examples/textures/cube/MilkyWay/');
+const milkyWay = cubeLoader.load(
+  ['dark-s_px.jpg','dark-s_nx.jpg','dark-s_py.jpg','dark-s_ny.jpg','dark-s_pz.jpg','dark-s_nz.jpg']
+);
+milkyWay.colorSpace = THREE.SRGBColorSpace;
+scene.background = milkyWay;
+scene.environment = milkyWay;
+// Dim the sky so the foreground reads as luminous against a deep void,
+// while still bathing PBR materials in real Milky-Way reflections.
+scene.backgroundIntensity = 0.18;
+scene.backgroundBlurriness = 0.0;
+scene.environmentIntensity = 0.35;
+
+const texLoader = new THREE.TextureLoader();
+texLoader.setCrossOrigin('anonymous');
+
+/* --- Soft-disc sprite for round, photographic stars/particles --- */
+function makeSoftDisc(size = 128, inner = 'rgba(255,255,255,1)', mid = 'rgba(255,255,255,0.35)') {
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const g = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  g.addColorStop(0.0, inner);
+  g.addColorStop(0.25, mid);
+  g.addColorStop(1.0, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0,0,size,size);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 4;
+  return tex;
+}
+const starSprite = makeSoftDisc(128);
+const wispySprite = makeSoftDisc(256, 'rgba(255,255,255,0.55)', 'rgba(255,255,255,0.12)');
+
+/* Diffraction-spike sprite — telescope cross pattern.
+   A small bright core + 4 thin radial spikes. The signature
+   look of bright stars in real astrophotography. */
+function makeSpikeStar(size = 256) {
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  ctx.translate(size/2, size/2);
+  // Core
+  const g = ctx.createRadialGradient(0,0,0, 0,0, size*0.18);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.4, 'rgba(255,255,255,0.7)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(0,0, size*0.5, 0, Math.PI*2); ctx.fill();
+  // Spikes (4-point cross, slight cross of secondary)
+  ctx.globalCompositeOperation = 'lighter';
+  for (let s = 0; s < 4; s++) {
+    ctx.save();
+    ctx.rotate(s * Math.PI/2);
+    const grad = ctx.createLinearGradient(0, 0, size*0.5, 0);
+    grad.addColorStop(0, 'rgba(255,255,255,0.9)');
+    grad.addColorStop(0.4, 'rgba(255,255,255,0.2)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.moveTo(0, -0.5);
+    ctx.lineTo(size*0.5, 0);
+    ctx.lineTo(0, 0.5);
+    ctx.closePath();
+    ctx.fill();
+    // mirror
+    ctx.beginPath();
+    ctx.moveTo(0, -0.5);
+    ctx.lineTo(-size*0.5, 0);
+    ctx.lineTo(0, 0.5);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+const spikeSprite = makeSpikeStar(256);
+
+const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 2000);
+camera.position.set(0, 0, 10);
+
+// --- Lights ---
+// Very faint cool ambient so the night side of planets isn't pitch black
+scene.add(new THREE.AmbientLight(0x202840, 0.22));
+// Distant "sun" — single hard directional, photographic terminator on planets.
+// Position matches the visible sun sprite over the Earth's horizon.
+const sun = new THREE.DirectionalLight(0xfff5e0, 3.8);
+sun.position.set(-18, 5, 6);
+scene.add(sun);
+
+// --- Color palette — REAL astrophysical colors ---
+// Stellar blackbody temperatures, dusty browns, sepia oranges,
+// pale blue reflection nebulae, muted HII pink. No neon.
+const COL = {
+  // Star classes (Morgan-Keenan, color-temperature accurate)
+  starO:  new THREE.Color(0xb6c8ff), // O/B hot blue (rare)
+  starA:  new THREE.Color(0xeef0ff), // A white
+  starF:  new THREE.Color(0xfff4e8), // F yellow-white
+  starG:  new THREE.Color(0xfff0c8), // G sun-like
+  starK:  new THREE.Color(0xffd0a0), // K pale orange
+  starM:  new THREE.Color(0xffae7a), // M dim red dwarf
+
+  // Nebular & dust
+  hii:    new THREE.Color(0xc8807a), // hydrogen-alpha emission (dusty pink)
+  oiii:   new THREE.Color(0x90b8b0), // oxygen-III teal (faint)
+  refl:   new THREE.Color(0x8aa0c4), // blue reflection nebula
+  dust:   new THREE.Color(0x5e4a38), // interstellar dust brown
+  void:   new THREE.Color(0x1a1612), // dust silhouette
+
+  // Accretion / hot plasma
+  hot:    new THREE.Color(0xffecc0), // sepia-white hot
+  warm:   new THREE.Color(0xd8965a), // dusty orange
+  ember:  new THREE.Color(0x8a4a28), // rust
+};
+
+/* ============================================================
+   STARFIELD — Multi-layer parallax
+============================================================ */
+/* Stellar mass function: most stars are M/K dwarfs (faint orange/red),
+   then G/F (sun-like white-yellow), then A (white), then rare hot blue O/B.
+   Real Milky Way star distribution. */
+function sampleStarColor() {
+  const r = Math.random();
+  if (r < 0.55) return COL.starM;   // red dwarfs — most common but very dim
+  if (r < 0.78) return COL.starK;   // orange dwarfs
+  if (r < 0.88) return COL.starG;   // sun-like
+  if (r < 0.94) return COL.starF;   // yellow-white
+  if (r < 0.985) return COL.starA;  // white
+  return COL.starO;                  // hot blue (rare, dazzling)
+}
+
+function makeStarLayer(count, radius, size, opacity = 0.9) {
+  const geo = new THREE.BufferGeometry();
+  const pos = new Float32Array(count * 3);
+  const col = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const r = radius * (0.7 + Math.random() * 0.3);
+    const th = Math.random() * Math.PI * 2;
+    const ph = Math.acos(2 * Math.random() - 1);
+    pos[i*3]   = r * Math.sin(ph) * Math.cos(th);
+    pos[i*3+1] = r * Math.sin(ph) * Math.sin(th);
+    pos[i*3+2] = r * Math.cos(ph);
+    const c = sampleStarColor();
+    // Cubic luminosity distribution — most stars very dim, a few bright
+    const lum = Math.pow(Math.random(), 3.5) * 0.85 + 0.15;
+    col[i*3]   = c.r * lum;
+    col[i*3+1] = c.g * lum;
+    col[i*3+2] = c.b * lum;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+  return new THREE.Points(geo, new THREE.PointsMaterial({
+    size,
+    map: starSprite,
+    vertexColors: true,
+    transparent: true,
+    opacity,
+    sizeAttenuation: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
+  }));
+}
+const farStars   = makeStarLayer(1800, 200, 0.55, 0.6);
+const midStars   = makeStarLayer(600,  80,  0.45, 0.8);
+const closeStars = makeStarLayer(140,  40,  0.7,  0.95);
+scene.add(farStars, midStars, closeStars);
+
+/* Bright "named" stars — the ones with visible diffraction spikes */
+function makeBrightStars(count, radius) {
+  const geo = new THREE.BufferGeometry();
+  const pos = new Float32Array(count * 3);
+  const col = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const r = radius * (0.6 + Math.random() * 0.4);
+    const th = Math.random() * Math.PI * 2;
+    const ph = Math.acos(2 * Math.random() - 1);
+    pos[i*3]   = r * Math.sin(ph) * Math.cos(th);
+    pos[i*3+1] = r * Math.sin(ph) * Math.sin(th);
+    pos[i*3+2] = r * Math.cos(ph);
+    const c = sampleStarColor();
+    col[i*3] = c.r; col[i*3+1] = c.g; col[i*3+2] = c.b;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+  return new THREE.Points(geo, new THREE.PointsMaterial({
+    size: 2.4, map: spikeSprite, vertexColors: true, transparent: true,
+    opacity: 0.95, sizeAttenuation: true, depthWrite: false,
+    blending: THREE.AdditiveBlending
+  }));
+}
+const brightStars = makeBrightStars(60, 60);
+scene.add(brightStars);
+
+/* ============================================================
+   GALAXY (spiral disk) — far backdrop
+============================================================ */
+function makeGalaxy(count = 8000) {
+  const geo = new THREE.BufferGeometry();
+  const pos = new Float32Array(count * 3);
+  const col = new Float32Array(count * 3);
+  const arms = 4;
+  for (let i = 0; i < count; i++) {
+    const arm = i % arms;
+    const r = Math.pow(Math.random(), 1.5) * 60 + 5;
+    const armAngle = (arm / arms) * Math.PI * 2;
+    const spiral = r * 0.07;
+    const a = armAngle + spiral + (Math.random() - 0.5) * 0.4;
+    const lift = (Math.random() - 0.5) * (8 - r * 0.08);
+    pos[i*3]   = Math.cos(a) * r;
+    pos[i*3+1] = lift;
+    pos[i*3+2] = Math.sin(a) * r;
+
+    /* Real spiral-galaxy color zones:
+       - Bulge (small r): warm yellow-cream (old population II stars)
+       - Inner disk: pale cream / pale yellow
+       - Outer arms: cool white-blue with pinkish HII regions
+       - Sparse rust dust mixed throughout
+    */
+    const radial = r / 60; // 0 inner → 1 outer
+    let c;
+    const roll = Math.random();
+    if (radial < 0.25) {
+      // Bulge — warm yellow-orange
+      c = COL.starG.clone().lerp(COL.starK, Math.random() * 0.6);
+    } else if (radial < 0.6) {
+      // Inner disk — cream / pale yellow
+      c = COL.starF.clone().lerp(COL.starG, Math.random());
+    } else {
+      // Outer arms — blue-white with occasional HII pink
+      if (roll < 0.08) c = COL.hii.clone();             // emission nebula speckle
+      else if (roll < 0.2) c = COL.starO.clone();        // hot young blue star
+      else c = COL.starA.clone().lerp(COL.starF, Math.random());
+    }
+    // Dust dimming: random subset darkened to fake dust lanes
+    const dim = Math.random() < 0.18 ? 0.25 : (0.4 + Math.random() * 0.6);
+    col[i*3]   = c.r * dim;
+    col[i*3+1] = c.g * dim;
+    col[i*3+2] = c.b * dim;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+  return new THREE.Points(geo, new THREE.PointsMaterial({
+    size: 0.6, map: starSprite, vertexColors: true, transparent: true, opacity: 0.45,
+    sizeAttenuation: true, depthWrite: false, blending: THREE.AdditiveBlending
+  }));
+}
+const galaxyGroup = new THREE.Group();
+galaxyGroup.position.set(-32, -8, -85);
+galaxyGroup.rotation.x = -0.55;        // inclined disk (Andromeda-like 3/4 view)
+galaxyGroup.rotation.z = 0.42;
+scene.add(galaxyGroup);
+
+/* Real Andromeda-style painted galaxy.
+   One canvas texture combines: graduated bulge, swept spiral arms with
+   stellar streaks, curved dust lanes following the arms, faint HII patches,
+   and a soft halo falloff. All in the dusty cream/sepia palette. */
+function makeAndromedaTexture(size = 1024) {
+  const c = document.createElement('canvas'); c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const cx = size/2, cy = size/2;
+  const ARMS = 2;                        // M31 has 2 dominant arms
+  const PITCH = 0.32;                    // logarithmic spiral tightness
+
+  // 1) Wide soft halo — very faint integrated starlight
+  let g = ctx.createRadialGradient(cx, cy, 0, cx, cy, size*0.5);
+  g.addColorStop(0.00, 'rgba(255, 232, 188, 0.45)');
+  g.addColorStop(0.08, 'rgba(245, 215, 168, 0.35)');
+  g.addColorStop(0.22, 'rgba(210, 175, 130, 0.18)');
+  g.addColorStop(0.45, 'rgba(160, 122, 88, 0.08)');
+  g.addColorStop(0.75, 'rgba(90, 65, 45, 0.03)');
+  g.addColorStop(1.00, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, size, size);
+
+  // 2) Bright bulge — concentrated, soft falloff
+  g = ctx.createRadialGradient(cx, cy, 0, cx, cy, size*0.14);
+  g.addColorStop(0.00, 'rgba(255, 248, 220, 0.95)');
+  g.addColorStop(0.20, 'rgba(255, 232, 188, 0.78)');
+  g.addColorStop(0.55, 'rgba(230, 188, 140, 0.35)');
+  g.addColorStop(1.00, 'rgba(180, 130, 85, 0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, size, size);
+
+  // 3) Spiral arms — many small soft brush strokes along log-spiral curves
+  ctx.globalCompositeOperation = 'lighter';
+  const ARM_PTS = 380;
+  for (let a = 0; a < ARMS; a++) {
+    const armOffset = (a / ARMS) * Math.PI * 2;
+    for (let i = 0; i < ARM_PTS; i++) {
+      const tParam = i / ARM_PTS;
+      const r = size * 0.07 + (size * 0.43) * tParam;
+      const theta = armOffset + Math.log(r/size + 0.02) / PITCH;
+      // Scatter around the central spiral line
+      const scatter = (1 - tParam) * 8 + tParam * 18;
+      const px = cx + Math.cos(theta) * r + (Math.random()-0.5) * scatter;
+      const py = cy + Math.sin(theta) * r + (Math.random()-0.5) * scatter;
+      const radius = 4 + Math.random() * 9;
+      const gp = ctx.createRadialGradient(px, py, 0, px, py, radius);
+      const alpha = 0.04 + Math.random() * 0.09;
+      // Outer arms cooler/bluer (young hot stars), inner warmer
+      const blue = tParam > 0.4 && Math.random() < 0.35;
+      const color = blue
+        ? `rgba(200, 215, 245, ${alpha*0.9})`
+        : `rgba(252, 230, 195, ${alpha})`;
+      gp.addColorStop(0, color);
+      gp.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = gp;
+      ctx.fillRect(px - radius, py - radius, radius*2, radius*2);
+    }
+  }
+
+  // 4) HII regions — pink/red star-forming patches along outer arms
+  for (let i = 0; i < 45; i++) {
+    const tParam = 0.35 + Math.random() * 0.55;
+    const arm = Math.floor(Math.random() * ARMS);
+    const r = size * 0.08 + (size * 0.42) * tParam;
+    const theta = (arm / ARMS) * Math.PI * 2 + Math.log(r/size + 0.02) / PITCH
+                  + (Math.random() - 0.5) * 0.3;
+    const px = cx + Math.cos(theta) * r;
+    const py = cy + Math.sin(theta) * r;
+    const rad = 3 + Math.random() * 5;
+    const gp = ctx.createRadialGradient(px, py, 0, px, py, rad);
+    gp.addColorStop(0, `rgba(220, 130, 110, ${0.3 + Math.random() * 0.25})`);
+    gp.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = gp;
+    ctx.fillRect(px - rad, py - rad, rad*2, rad*2);
+  }
+
+  // 5) Dust lanes — DARK curved arcs that follow the spiral structure,
+  //    offset slightly from the bright arms.
+  ctx.globalCompositeOperation = 'destination-out';
+  for (let a = 0; a < ARMS; a++) {
+    const armOffset = (a / ARMS) * Math.PI * 2 + 0.45;     // offset from bright arm
+    for (let i = 20; i < 240; i++) {
+      const tParam = i / 240;
+      const r = size * 0.10 + (size * 0.40) * tParam;
+      const theta = armOffset + Math.log(r/size + 0.02) / PITCH;
+      const scatter = (1 - tParam) * 5 + tParam * 12;
+      const px = cx + Math.cos(theta) * r + (Math.random()-0.5) * scatter;
+      const py = cy + Math.sin(theta) * r + (Math.random()-0.5) * scatter;
+      const radius = 4 + Math.random() * 7;
+      const gp = ctx.createRadialGradient(px, py, 0, px, py, radius);
+      gp.addColorStop(0, `rgba(0,0,0,${0.18 + Math.random() * 0.28})`);
+      gp.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = gp;
+      ctx.fillRect(px - radius, py - radius, radius*2, radius*2);
+    }
+  }
+  ctx.globalCompositeOperation = 'source-over';
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  return tex;
+}
+
+/* Single inclined plane carries the painted galaxy — looks like one Hubble
+   image instead of layered sprites + sparkles. */
+const galaxyTex = makeAndromedaTexture(1024);
+const galaxy = new THREE.Mesh(
+  new THREE.PlaneGeometry(70, 70),
+  new THREE.MeshBasicMaterial({
+    map: galaxyTex,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    opacity: 0.85
+  })
+);
+galaxyGroup.add(galaxy);
+
+// A small handful of bright foreground sparkle points
+// — sells the "stars in front of galaxy" depth illusion without sprinkly noise.
+{
+  const fgCount = 80;
+  const fgGeo = new THREE.BufferGeometry();
+  const fgPos = new Float32Array(fgCount * 3);
+  const fgCol = new Float32Array(fgCount * 3);
+  for (let i = 0; i < fgCount; i++) {
+    const r = 15 + Math.random() * 22;
+    const a = Math.random() * Math.PI * 2;
+    fgPos[i*3]   = Math.cos(a) * r;
+    fgPos[i*3+1] = (Math.random() - 0.5) * 8;
+    fgPos[i*3+2] = Math.sin(a) * r * 0.3;
+    const c = sampleStarColor();
+    fgCol[i*3] = c.r; fgCol[i*3+1] = c.g; fgCol[i*3+2] = c.b;
+  }
+  fgGeo.setAttribute('position', new THREE.BufferAttribute(fgPos, 3));
+  fgGeo.setAttribute('color',    new THREE.BufferAttribute(fgCol, 3));
+  galaxyGroup.add(new THREE.Points(fgGeo, new THREE.PointsMaterial({
+    size: 0.5, map: starSprite, vertexColors: true, transparent: true,
+    opacity: 0.7, sizeAttenuation: true, depthWrite: false,
+    blending: THREE.AdditiveBlending
+  })));
+}
+
+/* ============================================================
+   BLACK HOLE — Section 01 (Observatory)
+============================================================ */
+const blackHoleGroup = new THREE.Group();
+blackHoleGroup.position.set(8, -6, -6);
+scene.add(blackHoleGroup);
+
+// Event horizon (pure black sphere — absorbs all light, no shading)
+const eventHorizon = new THREE.Mesh(
+  new THREE.SphereGeometry(1.0, 96, 96),
+  new THREE.MeshBasicMaterial({ color: 0x000000 })
+);
+blackHoleGroup.add(eventHorizon);
+
+/* --- Accretion-disk shader factory.
+   The SAME shader is reused on the horizontal disk AND the two vertical
+   half-rings that fake the gravitational lensing wrap — so the lensed
+   material reads as the same continuous luminous band wrapping the BH,
+   exactly like Gargantua in Interstellar / EHT photos. --- */
+function makeDiskShader(inner, outer, dopplerBoost = 1.0) {
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: { value: 0 },
+      uInner: { value: inner },
+      uOuter: { value: outer },
+      uDoppler: { value: dopplerBoost }
+    },
+    transparent: true,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    vertexShader: `
+      varying vec3 vLocal;
+      void main() {
+        vLocal = position;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform float uTime;
+      uniform float uInner;
+      uniform float uOuter;
+      uniform float uDoppler;
+      varying vec3 vLocal;
+
+      float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+      float noise(vec2 p){
+        vec2 i = floor(p), f = fract(p);
+        float a = hash(i), b = hash(i + vec2(1.0,0.0));
+        float c = hash(i + vec2(0.0,1.0)), d = hash(i + vec2(1.0,1.0));
+        vec2 u = f*f*(3.0-2.0*f);
+        return mix(a,b,u.x) + (c-a)*u.y*(1.0-u.x) + (d-b)*u.x*u.y;
+      }
+      float fbm(vec2 p){
+        float s = 0.0, a = 0.5;
+        for(int i=0; i<6; i++){ s += a*noise(p); p *= 2.07; a *= 0.5; }
+        return s;
+      }
+
+      void main() {
+        float r = length(vLocal.xy);
+        if (r < uInner || r > uOuter) discard;
+
+        float t = (r - uInner) / (uOuter - uInner);
+        float angle = atan(vLocal.y, vLocal.x);
+
+        // Keplerian-sheared turbulence (faster inner orbits)
+        float orbitSpeed = 1.0 / pow(t + 0.2, 0.5);
+        float swirl = angle + uTime * orbitSpeed * 0.55;
+        float turb = fbm(vec2(cos(swirl), sin(swirl)) * 4.0 + vec2(t * 5.0, uTime * 0.15));
+        turb = pow(turb, 1.3);
+
+        // Real Gargantua / M87 palette: brilliant cream-white core → dusty amber → rust → cold brown
+        vec3 hot   = vec3(1.00, 0.97, 0.88);
+        vec3 mid   = vec3(0.98, 0.78, 0.48);
+        vec3 cool  = vec3(0.72, 0.42, 0.20);
+        vec3 deep  = vec3(0.28, 0.16, 0.08);
+        vec3 col = mix(hot, mid, smoothstep(0.0, 0.22, t));
+        col = mix(col, cool, smoothstep(0.22, 0.6, t));
+        col = mix(col, deep, smoothstep(0.6, 1.0, t));
+
+        // Doppler beaming — gentle asymmetry, both sides still visible (real BH)
+        float bs = 0.5 + 0.5 * sin(angle - 0.3);
+        float doppler = mix(1.0, 0.55 + 0.9 * pow(bs, 1.4), uDoppler);
+
+        // Inner ISCO brightness spike — the brilliant white edge
+        float bright = (1.0 - smoothstep(0.0, 0.14, t)) * 3.5 + 0.7;
+
+        // Soft alpha falloff at outer edge so the disk fades to space
+        float alpha = smoothstep(0.0, 0.04, t) * (1.0 - smoothstep(0.75, 1.0, t));
+        alpha *= 0.45 + 0.8 * turb;
+
+        gl_FragColor = vec4(col * bright * doppler * (0.45 + turb * 1.25), alpha);
+      }
+    `
+  });
+}
+
+// --- Main horizontal accretion disk (equatorial, Doppler-asymmetric) ---
+const diskMat = makeDiskShader(1.10, 5.2, 1.0);
+const accretionDisk = new THREE.Mesh(new THREE.RingGeometry(1.10, 5.2, 320, 1), diskMat);
+accretionDisk.rotation.x = Math.PI / 2 - 0.32;     // slight tilt toward camera
+blackHoleGroup.add(accretionDisk);
+
+/* --- Gravitational-lens "halo" — the back of the disk bent over and under
+   the event horizon. Two vertical half-rings of the SAME disk material that
+   together with the equatorial disk form the iconic Gargantua arch.
+   Doppler turned off here (lensed paths aren't beamed the same way). --- */
+const haloMat = makeDiskShader(1.06, 1.85, 0.0);
+
+// Upper arch (top half-ring, perpendicular to disk, facing camera)
+const haloTop = new THREE.Mesh(
+  new THREE.RingGeometry(1.06, 1.85, 160, 1, 0, Math.PI),
+  haloMat
+);
+haloTop.rotation.x = -0.02;
+blackHoleGroup.add(haloTop);
+
+// Lower arch (bottom half-ring)
+const haloBot = new THREE.Mesh(
+  new THREE.RingGeometry(1.06, 1.85, 160, 1, Math.PI, Math.PI),
+  haloMat
+);
+haloBot.rotation.x = -0.02;
+blackHoleGroup.add(haloBot);
+
+// Outer secondary halo (the dimmer, further-out lensed echo)
+const haloMat2 = makeDiskShader(1.85, 2.45, 0.0);
+const haloOuter = new THREE.Mesh(
+  new THREE.RingGeometry(1.85, 2.45, 128, 1, 0, Math.PI * 2),
+  haloMat2
+);
+haloOuter.rotation.x = -0.02;
+haloOuter.material.opacity = 0.5;
+blackHoleGroup.add(haloOuter);
+
+// Photon ring — the brilliant thin halo kissing the event horizon
+const photonRing = new THREE.Mesh(
+  new THREE.TorusGeometry(1.045, 0.018, 16, 256),
+  new THREE.MeshBasicMaterial({
+    color: 0xfff2d8, transparent: true, opacity: 1.0,
+    blending: THREE.AdditiveBlending, depthWrite: false
+  })
+);
+photonRing.rotation.x = -0.02; // vertical orientation — visible as a full circle from camera
+blackHoleGroup.add(photonRing);
+
+// A second softer photon "kiss" glow just outside the ring
+const photonGlow = new THREE.Mesh(
+  new THREE.TorusGeometry(1.065, 0.05, 16, 256),
+  new THREE.MeshBasicMaterial({
+    color: 0xffe2a8, transparent: true, opacity: 0.6,
+    blending: THREE.AdditiveBlending, depthWrite: false
+  })
+);
+photonGlow.rotation.x = -0.02;
+blackHoleGroup.add(photonGlow);
+
+// Relativistic jets (twin polar beams)
+// Black hole illumination — warm sepia (real disk glow)
+const bhLight1 = new THREE.PointLight(0xffb878, 28, 32);
+bhLight1.position.set(0, 0, 0);
+blackHoleGroup.add(bhLight1);
+
+/* ============================================================
+   SUPERNOVA — Section 02 (Phenomena)
+============================================================ */
+const supernovaGroup = new THREE.Group();
+supernovaGroup.position.set(-10, 4, -8);
+scene.add(supernovaGroup);
+
+// Core — white-hot photosphere
+const supernovaCore = new THREE.Mesh(
+  new THREE.SphereGeometry(0.6, 32, 32),
+  new THREE.MeshBasicMaterial({ color: 0xffeec0, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending })
+);
+supernovaGroup.add(supernovaCore);
+
+/* Real supernova remnant — painted nebular cloud on a billboard sprite.
+   Crab/Veil look: bright white-hot core, radial filamentary tendrils
+   in dusty amber, soft halo falloff. */
+function makeSupernovaTexture(size = 512) {
+  const c = document.createElement('canvas'); c.width = c.height = size;
+  const ctx = c.getContext('2d');
+  const cx = size/2, cy = size/2;
+
+  // 1) Wide soft amber halo
+  let g = ctx.createRadialGradient(cx, cy, 0, cx, cy, size*0.5);
+  g.addColorStop(0.00, 'rgba(255, 240, 210, 0.45)');
+  g.addColorStop(0.15, 'rgba(245, 195, 140, 0.30)');
+  g.addColorStop(0.35, 'rgba(200, 130, 85, 0.15)');
+  g.addColorStop(0.65, 'rgba(120, 70, 50, 0.05)');
+  g.addColorStop(1.00, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, size, size);
+
+  // 2) Filamentary tendrils — irregular radial wisps with sine-wiggle paths
+  ctx.globalCompositeOperation = 'lighter';
+  const TENDRILS = 28;
+  for (let i = 0; i < TENDRILS; i++) {
+    const baseAngle = (i / TENDRILS) * Math.PI * 2 + Math.random() * 0.5;
+    const length = size * (0.25 + Math.random() * 0.2);
+    const wiggleFreq = 4 + Math.random() * 6;
+    const wiggleAmp  = 4 + Math.random() * 10;
+    const steps = 40;
+    for (let s = 0; s < steps; s++) {
+      const t = s / steps;
+      const r = t * length;
+      const angle = baseAngle + Math.cos(t * wiggleFreq + i) * 0.18;
+      const ox = Math.cos(angle + Math.PI/2) * Math.sin(t * wiggleFreq) * wiggleAmp;
+      const oy = Math.sin(angle + Math.PI/2) * Math.sin(t * wiggleFreq) * wiggleAmp;
+      const px = cx + Math.cos(angle) * r + ox;
+      const py = cy + Math.sin(angle) * r + oy;
+      const radius = (1 - t * 0.7) * 4 + 1;
+      const gp = ctx.createRadialGradient(px, py, 0, px, py, radius);
+      const alpha = (1 - t) * 0.16;
+      // Mostly amber, occasional cooler blue-green OIII wisp
+      const blue = Math.random() < 0.18;
+      const col = blue
+        ? `rgba(180, 220, 210, ${alpha * 0.7})`
+        : `rgba(255, 195, 130, ${alpha})`;
+      gp.addColorStop(0, col);
+      gp.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = gp;
+      ctx.fillRect(px - radius, py - radius, radius*2, radius*2);
+    }
+  }
+
+  // 3) Scattered diffuse cloud puffs — fills gaps between tendrils
+  for (let i = 0; i < 60; i++) {
+    const a = Math.random() * Math.PI * 2;
+    const r = size * (0.08 + Math.random() * 0.35);
+    const px = cx + Math.cos(a) * r;
+    const py = cy + Math.sin(a) * r;
+    const radius = 8 + Math.random() * 16;
+    const gp = ctx.createRadialGradient(px, py, 0, px, py, radius);
+    gp.addColorStop(0, `rgba(255, 200, 145, ${0.04 + Math.random() * 0.06})`);
+    gp.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = gp;
+    ctx.fillRect(px - radius, py - radius, radius*2, radius*2);
+  }
+
+  // 4) Bright concentrated core (pulsar / white-hot remnant)
+  g = ctx.createRadialGradient(cx, cy, 0, cx, cy, size * 0.10);
+  g.addColorStop(0.00, 'rgba(255, 250, 235, 0.95)');
+  g.addColorStop(0.35, 'rgba(255, 225, 180, 0.55)');
+  g.addColorStop(1.00, 'rgba(255, 200, 140, 0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, size, size);
+
+  ctx.globalCompositeOperation = 'source-over';
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  return tex;
+}
+
+const supernovaTex = makeSupernovaTexture(512);
+// Billboard sprite — always faces the camera, no wireframe artifacts
+const supernovaHalo = new THREE.Sprite(new THREE.SpriteMaterial({
+  map: supernovaTex,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+  opacity: 0.95
+}));
+supernovaHalo.scale.set(4.5, 4.5, 1);
+supernovaGroup.add(supernovaHalo);
+
+// Keep a reference for the animate loop (old code referenced supernovaFilaments)
+const supernovaFilaments = supernovaHalo;
+
+// Particle burst
+const burstCount = 800;
+const burstGeo = new THREE.BufferGeometry();
+const burstPos = new Float32Array(burstCount * 3);
+const burstVel = [];
+const burstCol = new Float32Array(burstCount * 3);
+// Real supernova ejecta: white-hot core debris cooling to sepia/rust
+const ejectaPalette = [
+  new THREE.Color(0xfff4d8), new THREE.Color(0xffe2a8),
+  new THREE.Color(0xd89860), new THREE.Color(0x8a5a3a),
+  new THREE.Color(0xc8a890), new THREE.Color(0xe8c89a)
+];
+for (let i = 0; i < burstCount; i++) {
+  burstPos[i*3] = 0; burstPos[i*3+1] = 0; burstPos[i*3+2] = 0;
+  const th = Math.random() * Math.PI * 2;
+  const ph = Math.acos(2 * Math.random() - 1);
+  const speed = 0.5 + Math.random() * 1.5;
+  burstVel.push(new THREE.Vector3(
+    Math.sin(ph) * Math.cos(th) * speed,
+    Math.sin(ph) * Math.sin(th) * speed,
+    Math.cos(ph) * speed
+  ));
+  const c = ejectaPalette[Math.floor(Math.random() * ejectaPalette.length)];
+  const dim = 0.5 + Math.random() * 0.5;
+  burstCol[i*3] = c.r * dim; burstCol[i*3+1] = c.g * dim; burstCol[i*3+2] = c.b * dim;
+}
+burstGeo.setAttribute('position', new THREE.BufferAttribute(burstPos, 3));
+burstGeo.setAttribute('color',    new THREE.BufferAttribute(burstCol, 3));
+const burst = new THREE.Points(burstGeo, new THREE.PointsMaterial({
+  size: 0.35, map: starSprite, vertexColors: true, transparent: true, opacity: 0.95,
+  blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+}));
+supernovaGroup.add(burst);
+
+// Shockwave ring — dusty amber, not vivid orange
+const shockwave = new THREE.Mesh(
+  new THREE.RingGeometry(0.8, 1.0, 64, 1),
+  new THREE.MeshBasicMaterial({ color: 0xb88458, transparent: true, opacity: 0.5, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false })
+);
+supernovaGroup.add(shockwave);
+
+let burstTime = 0;
+const burstDuration = 4.0;
+function resetBurst() {
+  burstTime = 0;
+  for (let i = 0; i < burstCount; i++) {
+    burstPos[i*3] = 0; burstPos[i*3+1] = 0; burstPos[i*3+2] = 0;
+  }
+  burstGeo.attributes.position.needsUpdate = true;
+  shockwave.scale.set(1,1,1);
+}
+function updateBurst(dt) {
+  burstTime += dt;
+  if (burstTime > burstDuration) resetBurst();
+  const t = burstTime / burstDuration;
+  for (let i = 0; i < burstCount; i++) {
+    const v = burstVel[i];
+    burstPos[i*3]   = v.x * burstTime * 2;
+    burstPos[i*3+1] = v.y * burstTime * 2;
+    burstPos[i*3+2] = v.z * burstTime * 2;
+  }
+  burstGeo.attributes.position.needsUpdate = true;
+  burst.material.opacity = 1 - t;
+  supernovaCore.scale.setScalar(1 + Math.sin(burstTime * 8) * 0.05);
+  supernovaCore.material.opacity = 0.6 + 0.4 * Math.sin(burstTime * 6);
+  // Painted remnant sprite — gentle expand-and-fade with the burst cycle,
+  // never goes invisible (the sprite IS the remnant).
+  const baseScale = 4.5;
+  const breathe   = 0.10 * Math.sin(t * 0.6);     // subtle idle breathing
+  const burstExp  = 0.4 * t;                       // gentle outward push during burst
+  supernovaHalo.scale.setScalar(baseScale + breathe + burstExp);
+  supernovaHalo.material.opacity = 0.95 - 0.25 * t;
+  supernovaHalo.material.rotation = t * 0.05;     // very slow swirl of the painted cloud
+  shockwave.scale.setScalar(1 + t * 6);
+  shockwave.material.opacity = 0.6 * (1 - t);
+}
+
+/* ============================================================
+   PLANET WITH MOONS — Section 03 (Mission)
+============================================================ */
+const planetGroup = new THREE.Group();
+planetGroup.position.set(10, 2, -10);
+scene.add(planetGroup);
+
+/* --- Real moon texture (used for the moons) --- */
+const TEX = 'https://unpkg.com/three@0.160.0/examples/textures/planets/';
+const moonMap = texLoader.load(TEX + 'moon_1024.jpg');
+moonMap.colorSpace = THREE.SRGBColorSpace;
+
+/* --- Procedurally-painted gas-giant texture (Saturn-like banded atmosphere) --- */
+function makeGasGiantTexture(w = 2048, h = 1024) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  const ctx = c.getContext('2d');
+  // Latitudinal bands — pole-to-pole gradient with named atmospheric bands
+  const grad = ctx.createLinearGradient(0, 0, 0, h);
+  const bands = [
+    [0.00, '#2a1a10'], [0.05, '#5a3a20'], [0.12, '#8a6038'],
+    [0.20, '#b88a58'], [0.28, '#d8aa78'], [0.35, '#c89868'],
+    [0.42, '#e0b888'], [0.48, '#f0d0a0'], [0.50, '#e8c498'],
+    [0.52, '#f0d0a0'], [0.58, '#d8b080'], [0.65, '#c08858'],
+    [0.72, '#a87048'], [0.80, '#7a4c2a'], [0.88, '#4a2e18'],
+    [0.95, '#2a1a10'], [1.00, '#1a0e08']
+  ];
+  bands.forEach(([s, c]) => grad.addColorStop(s, c));
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  // Streaky atmospheric turbulence on top
+  for (let i = 0; i < 2000; i++) {
+    const y = Math.random() * h;
+    const x = Math.random() * w;
+    const len = 60 + Math.random() * 360;
+    const a = 0.03 + Math.random() * 0.12;
+    const warm = Math.random() < 0.5;
+    ctx.fillStyle = warm ? `rgba(255,230,180,${a})` : `rgba(80,50,30,${a})`;
+    ctx.fillRect(x, y, len, 1);
+  }
+  // A few "storm" oval spots (Great-Red-Spot style)
+  for (let i = 0; i < 6; i++) {
+    const x = Math.random() * w;
+    const y = h * (0.35 + Math.random() * 0.3);
+    const rx = 30 + Math.random() * 60;
+    const ry = 12 + Math.random() * 20;
+    const g = ctx.createRadialGradient(x, y, 0, x, y, rx);
+    g.addColorStop(0, 'rgba(180,70,40,0.7)');
+    g.addColorStop(0.5, 'rgba(140,60,40,0.4)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.save();
+    ctx.translate(x, y); ctx.scale(1, ry/rx);
+    ctx.beginPath(); ctx.arc(0, 0, rx, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  return tex;
+}
+const gasGiantTex = makeGasGiantTexture();
+
+const planet = new THREE.Mesh(
+  new THREE.SphereGeometry(1.7, 128, 128),
+  new THREE.MeshStandardMaterial({
+    map: gasGiantTex,
+    roughness: 0.92,
+    metalness: 0.0
+  })
+);
+planet.rotation.z = 0.47; // gentle axial tilt
+planetGroup.add(planet);
+
+/* Subtle warm atmospheric haze — much fainter than Earth's blue limb.
+   Real gas giants show a soft warm scattering, not a vivid blue ring. */
+const atmosphere = new THREE.Mesh(
+  new THREE.SphereGeometry(1.78, 64, 64),
+  new THREE.ShaderMaterial({
+    transparent: true,
+    side: THREE.BackSide,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    uniforms: { uColor: { value: new THREE.Color(0xd8b070) } },
+    vertexShader: `
+      varying vec3 vNormal;
+      varying vec3 vView;
+      void main() {
+        vNormal = normalize(normalMatrix * normal);
+        vec4 mv = modelViewMatrix * vec4(position, 1.0);
+        vView = normalize(-mv.xyz);
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader: `
+      uniform vec3 uColor;
+      varying vec3 vNormal;
+      varying vec3 vView;
+      void main() {
+        float rim = pow(1.0 - max(dot(vNormal, vView), 0.0), 3.5);
+        gl_FragColor = vec4(uColor * rim * 0.45, rim * 0.4);
+      }`
+  })
+);
+planetGroup.add(atmosphere);
+
+/* Saturn-style ring system — multi-band with Cassini Division gap.
+   Texture has the canonical C / B / Cassini / A / F band structure. */
+function makeRingTexture(size = 2048) {
+  const c = document.createElement('canvas');
+  c.width = size; c.height = 32;
+  const ctx = c.getContext('2d');
+  const g = ctx.createLinearGradient(0, 0, size, 0);
+  // 0 = inner edge → 1 = outer edge
+  g.addColorStop(0.00, 'rgba(0,0,0,0)');
+  g.addColorStop(0.04, 'rgba(160,130,95,0.15)');
+  g.addColorStop(0.10, 'rgba(190,160,120,0.35)');     // C-ring (faint dusty)
+  g.addColorStop(0.22, 'rgba(220,190,150,0.65)');
+  g.addColorStop(0.32, 'rgba(245,215,175,0.92)');     // B-ring inner (bright)
+  g.addColorStop(0.46, 'rgba(250,225,185,1.00)');     // B-ring outer (brightest)
+  g.addColorStop(0.54, 'rgba(180,150,110,0.50)');
+  g.addColorStop(0.57, 'rgba(20,15,10,0.0)');         // Cassini Division (gap)
+  g.addColorStop(0.60, 'rgba(20,15,10,0.0)');
+  g.addColorStop(0.63, 'rgba(210,180,140,0.85)');     // A-ring
+  g.addColorStop(0.78, 'rgba(195,165,125,0.7)');
+  g.addColorStop(0.83, 'rgba(40,28,18,0.0)');         // Encke gap
+  g.addColorStop(0.86, 'rgba(195,165,125,0.7)');
+  g.addColorStop(0.94, 'rgba(140,105,75,0.3)');       // F-ring (thin outer)
+  g.addColorStop(0.98, 'rgba(140,105,75,0.12)');
+  g.addColorStop(1.00, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, size, 32);
+  // Subtle radial noise streaks
+  for (let i = 0; i < 1200; i++) {
+    const x = Math.random() * size;
+    const w = 1 + Math.random() * 3;
+    const a = Math.random() * 0.08;
+    ctx.fillStyle = Math.random() < 0.5
+      ? `rgba(255,235,200,${a})`
+      : `rgba(40,28,18,${a*1.4})`;
+    ctx.fillRect(x, 0, w, 32);
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 16;
+  return tex;
+}
+
+/* Build a ring geometry with UVs that map the texture radially
+   (inner→outer along the texture's x axis). */
+function makeRingGeometry(inner, outer, segments = 256) {
+  const geo = new THREE.RingGeometry(inner, outer, segments, 1);
+  const pos = geo.attributes.position;
+  const uvs = [];
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i), y = pos.getY(i);
+    const r = Math.sqrt(x*x + y*y);
+    const u = (r - inner) / (outer - inner); // 0 inner → 1 outer
+    const v = (Math.atan2(y, x) + Math.PI) / (Math.PI * 2);
+    uvs.push(u, v);
+  }
+  geo.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  return geo;
+}
+
+const ringTex = makeRingTexture();
+const planetRing = new THREE.Mesh(
+  makeRingGeometry(2.0, 3.6, 256),
+  new THREE.MeshStandardMaterial({
+    map: ringTex,
+    transparent: true,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    roughness: 1.0,
+    metalness: 0.0,
+    alphaTest: 0.02
+  })
+);
+planetRing.rotation.x = Math.PI / 2 - 0.28;
+planetRing.rotation.z = 0.15;
+planetGroup.add(planetRing);
+
+// Faint backside ring glow (ring particles catching sun on the far side)
+const ringGlow = new THREE.Mesh(
+  makeRingGeometry(2.0, 3.6, 256),
+  new THREE.MeshBasicMaterial({
+    map: ringTex,
+    color: 0xa07848,
+    transparent: true,
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    opacity: 0.25
+  })
+);
+ringGlow.rotation.x = planetRing.rotation.x;
+ringGlow.rotation.z = planetRing.rotation.z;
+planetGroup.add(ringGlow);
+
+// Moons
+const moons = [];
+const moonConfigs = [
+  { r: 3.5, size: 0.32, color: 0xe8ecff, speed: 0.6, phase: 0,    tilt: 0.1 },
+  { r: 4.4, size: 0.22, color: 0xc084fc, speed: 0.4, phase: 1.5,  tilt: -0.2 },
+  { r: 5.5, size: 0.28, color: 0xff8a3d, speed: 0.25, phase: 3.0, tilt: 0.3 }
+];
+moonConfigs.forEach(cfg => {
+  const m = new THREE.Mesh(
+    new THREE.SphereGeometry(cfg.size, 64, 64),
+    new THREE.MeshStandardMaterial({
+      map: moonMap,
+      roughness: 1.0,
+      metalness: 0.0
+    })
+  );
+  m.userData = cfg;
+  planetGroup.add(m);
+  moons.push(m);
+
+  // Orbit trail
+  const trail = new THREE.Mesh(
+    new THREE.RingGeometry(cfg.r - 0.005, cfg.r + 0.005, 96, 1),
+    new THREE.MeshBasicMaterial({ color: cfg.color, transparent: true, opacity: 0.18, side: THREE.DoubleSide, blending: THREE.AdditiveBlending })
+  );
+  trail.rotation.x = Math.PI / 2 + cfg.tilt;
+  planetGroup.add(trail);
+});
+
+/* ============================================================
+   NEBULA — Section 04 (Archive)
+============================================================ */
+const nebulaGroup = new THREE.Group();
+nebulaGroup.position.set(-9, -4, -12);
+scene.add(nebulaGroup);
+
+function makeNebulaCloud(count, color, scale) {
+  const geo = new THREE.BufferGeometry();
+  const pos = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    const r = Math.random() * scale;
+    const th = Math.random() * Math.PI * 2;
+    const ph = Math.acos(2 * Math.random() - 1);
+    pos[i*3]   = r * Math.sin(ph) * Math.cos(th);
+    pos[i*3+1] = r * Math.sin(ph) * Math.sin(th) * 0.5;
+    pos[i*3+2] = r * Math.cos(ph);
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  return new THREE.Points(geo, new THREE.PointsMaterial({
+    size: 2.2, map: wispySprite, color, transparent: true, opacity: 0.12,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+  }));
+}
+// Real nebula composition: heavy interstellar dust + faint HII emission + reflection
+nebulaGroup.add(makeNebulaCloud(900, 0x6a4c34, 5.2));    // dust brown (dominant)
+nebulaGroup.add(makeNebulaCloud(500, 0xa07060, 4.6));    // dusty pink HII (faint)
+nebulaGroup.add(makeNebulaCloud(450, 0x6a8098, 4.2));    // pale blue reflection
+nebulaGroup.add(makeNebulaCloud(300, 0x2a1c14, 5.0));    // dust silhouette pockets
+
+// Newborn protostar — pale white, not cyan
+const newStar = new THREE.Mesh(
+  new THREE.SphereGeometry(0.22, 24, 24),
+  new THREE.MeshBasicMaterial({ color: 0xfff0d8, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending })
+);
+nebulaGroup.add(newStar);
+
+/* ============================================================
+   COMETS / PARTICLE STREAKS (floating across)
+============================================================ */
+class Comet {
+  constructor() {
+    this.geo = new THREE.BufferGeometry();
+    this.pts = 24;
+    this.positions = new Float32Array(this.pts * 3);
+    this.colors    = new Float32Array(this.pts * 3);
+    this.geo.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
+    this.geo.setAttribute('color',    new THREE.BufferAttribute(this.colors, 3));
+    this.line = new THREE.Line(this.geo, new THREE.LineBasicMaterial({
+      vertexColors: true, transparent: true, opacity: 0.7, blending: THREE.AdditiveBlending
+    }));
+    // Bright glowing head sprite at the leading position
+    this.head = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: starSprite, color: 0xffffff,
+      transparent: true, blending: THREE.AdditiveBlending,
+      depthWrite: false, opacity: 1.0
+    }));
+    this.head.scale.set(0.6, 0.6, 1);
+    this.reset();
+  }
+  reset() {
+    const startX = (Math.random() - 0.5) * 60;
+    const startY = (Math.random() - 0.5) * 30;
+    const startZ = -30 - Math.random() * 20;
+    this.vel = new THREE.Vector3(
+      (Math.random() - 0.5) * 0.2,
+      (Math.random() - 0.5) * 0.15,
+      0.3 + Math.random() * 0.4
+    );
+    // Real shooting-star / meteor colors: pale white-blue ionization,
+    // sodium-yellow sputter, dusty cream. Never magenta.
+    const palette = [
+      new THREE.Color(0xeef2ff), // pale ion white-blue
+      new THREE.Color(0xfff4d8), // sodium yellow
+      new THREE.Color(0xd8d2c4), // dust cream
+      new THREE.Color(0xbacadc), // cold blue
+      new THREE.Color(0xffe0a8)  // warm meteoric
+    ];
+    const baseColor = palette[Math.floor(Math.random() * palette.length)];
+    const overallDim = 0.5 + Math.random() * 0.4;
+    for (let i = 0; i < this.pts; i++) {
+      this.positions[i*3]   = startX;
+      this.positions[i*3+1] = startY;
+      this.positions[i*3+2] = startZ;
+      // Quadratic falloff for a tapered, exponential trail (not linear)
+      const fade = Math.pow(1 - i / this.pts, 2.5) * overallDim;
+      this.colors[i*3]   = baseColor.r * fade;
+      this.colors[i*3+1] = baseColor.g * fade;
+      this.colors[i*3+2] = baseColor.b * fade;
+    }
+    this.geo.attributes.color.needsUpdate = true;
+    // Tint head to match
+    this.head.material.color.copy(baseColor);
+    this.head.material.opacity = overallDim;
+    this.head.scale.setScalar(0.4 + Math.random() * 0.6);
+    this.head.position.set(startX, startY, startZ);
+  }
+  update() {
+    // shift trail back
+    for (let i = this.pts - 1; i > 0; i--) {
+      this.positions[i*3]   = this.positions[(i-1)*3];
+      this.positions[i*3+1] = this.positions[(i-1)*3+1];
+      this.positions[i*3+2] = this.positions[(i-1)*3+2];
+    }
+    this.positions[0] += this.vel.x;
+    this.positions[1] += this.vel.y;
+    this.positions[2] += this.vel.z;
+    this.geo.attributes.position.needsUpdate = true;
+    this.head.position.set(this.positions[0], this.positions[1], this.positions[2]);
+    if (this.positions[2] > 15) this.reset();
+  }
+}
+const comets = [];
+for (let i = 0; i < 4; i++) {
+  const c = new Comet();
+  comets.push(c);
+  scene.add(c.line, c.head);
+}
+
+/* Hero Earth is now a real NASA photograph (.hero-bg layer in HTML).
+   The 3D scene fades in as the photo fades out on scroll. */
+
+/* ============================================================
+   INTERACTION + SCROLL
+============================================================ */
+const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+window.addEventListener('mousemove', (e) => {
+  pointer.tx = (e.clientX / window.innerWidth) * 2 - 1;
+  pointer.ty = -(e.clientY / window.innerHeight) * 2 + 1;
+});
+
+let scrollY = 0, scrollSmooth = 0;
+window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+
+/* --- Post-processing: UnrealBloom for cinematic photoreal glow.
+       Skipped on mobile — bloom is 3 extra full-screen passes and the
+       single biggest GPU cost on phones. */
+let composer = null, bloom = null;
+if (!IS_MOBILE) {
+  composer = new EffectComposer(renderer);
+  composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  composer.setSize(window.innerWidth, window.innerHeight);
+  composer.addPass(new RenderPass(scene, camera));
+  bloom = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    0.55, 0.5, 0.65
+  );
+  composer.addPass(bloom);
+  composer.addPass(new OutputPass());
+}
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  if (composer) {
+    composer.setSize(window.innerWidth, window.innerHeight);
+    bloom.setSize(window.innerWidth, window.innerHeight);
+  }
+});
+
+// HUD updates
+const sectorNames = ['PATIENT BILLING', 'THE PROBLEM', 'THE PLATFORM', 'IMPLEMENTATION', 'CLIENT RESULTS', 'BOOK A DEMO'];
+const sectorEl = document.getElementById('sector');
+const scrollPctEl = document.getElementById('scroll-pct');
+const fluxEl = document.getElementById('flux');
+const chronoEl = document.getElementById('chrono');
+const scrollInd = document.getElementById('scroll-ind');
+const heroBgEl = document.getElementById('hero-bg');
+let chronoBase = 15670;
+setInterval(() => {
+  chronoBase++;
+  const h = String(Math.floor(chronoBase / 3600) % 24).padStart(2,'0');
+  const m = String(Math.floor((chronoBase / 60) % 60)).padStart(2,'0');
+  const s = String(chronoBase % 60).padStart(2,'0');
+  chronoEl.textContent = `${h}:${m}:${s}`;
+}, 1000);
+
+const clock = new THREE.Clock();
+function animate() {
+  const t = clock.getElapsedTime();
+  const dt = clock.getDelta();
+
+  pointer.x += (pointer.tx - pointer.x) * 0.04;
+  pointer.y += (pointer.ty - pointer.y) * 0.04;
+  scrollSmooth += (scrollY - scrollSmooth) * 0.08;
+
+  const docH = document.body.scrollHeight - window.innerHeight;
+  const scrollFrac = Math.min(scrollSmooth / docH, 1);
+  scrollPctEl.textContent = Math.round(scrollFrac * 100) + '%';
+  const sectorIdx = Math.min(Math.floor(scrollFrac * sectorNames.length), sectorNames.length - 1);
+  sectorEl.textContent = sectorNames[sectorIdx];
+  // Balances-resolved counter ticking up — feels like a live ops dashboard
+  const baseBalances = 1204872 + Math.floor(t * 3);
+  fluxEl.textContent = baseBalances.toLocaleString();
+  scrollInd.style.opacity = scrollFrac < 0.05 ? 1 : 0;
+
+  // Starfield parallax
+  farStars.rotation.y    = t * 0.005 + pointer.x * 0.02;
+  farStars.rotation.x    = t * 0.002 + pointer.y * 0.02;
+  midStars.rotation.y    = t * 0.012 + pointer.x * 0.05;
+  midStars.rotation.x    = pointer.y * 0.05;
+  closeStars.rotation.y  = t * 0.025 + pointer.x * 0.1;
+  closeStars.rotation.x  = pointer.y * 0.1;
+
+  // Galaxy — very slow Z-rotation of the whole painted disk (real galaxies
+  // rotate over hundreds of millions of years; we just need imperceptible drift)
+  galaxyGroup.rotation.z = 0.42 + t * 0.004;
+
+  // Black hole — shader-driven swirl + subtle group rotation
+  blackHoleGroup.rotation.y = t * 0.04;
+  diskMat.uniforms.uTime.value  = t;
+  haloMat.uniforms.uTime.value  = t * 0.6;   // slightly slower halo swirl
+  haloMat2.uniforms.uTime.value = t * 0.35;
+  photonRing.material.opacity = 0.92 + Math.sin(t * 3) * 0.08;
+  photonGlow.material.opacity = 0.55 + Math.sin(t * 2.5) * 0.1;
+  bhLight1.intensity = 32 + Math.sin(t * 2) * 10;
+
+  // Supernova
+  updateBurst(dt);
+  supernovaGroup.rotation.z = t * 0.05;
+
+  // Hero photo — fade out as user scrolls past the hero section
+  const heroFade = Math.max(0, 1 - scrollFrac * 3.2);
+  if (heroBgEl) heroBgEl.style.opacity = heroFade.toFixed(3);
+
+  // Gas giant & moons (mission-section group)
+  planet.rotation.y = t * 0.12;            // fast rotation — real gas giants spin in ~10 h
+  atmosphere.scale.setScalar(1 + Math.sin(t * 1.5) * 0.005);
+  // Rings are inertial (don't rotate with planet) — leave them static
+  moons.forEach(m => {
+    const a = t * m.userData.speed + m.userData.phase;
+    m.position.set(
+      Math.cos(a) * m.userData.r,
+      Math.sin(a) * m.userData.r * Math.sin(m.userData.tilt),
+      Math.sin(a) * m.userData.r * Math.cos(m.userData.tilt)
+    );
+    m.rotation.y += 0.02;
+  });
+
+  // Nebula drift
+  nebulaGroup.rotation.y = t * 0.04;
+  nebulaGroup.children.forEach((c, i) => {
+    if (c.geometry?.type === 'BufferGeometry' && c !== newStar.geometry) {
+      c.rotation.z = t * 0.02 * (i + 1) * 0.5;
+    }
+  });
+  newStar.material.opacity = 0.7 + Math.sin(t * 4) * 0.3;
+  newStar.scale.setScalar(1 + Math.sin(t * 4) * 0.2);
+
+  // Comets
+  comets.forEach(c => c.update());
+
+  // Scroll-driven camera flight: start framing Earth's horizon,
+  // then rise away into deep space toward each phenomenon.
+  const path = scrollFrac;
+  const phase = path * 5;
+  const camPath = [
+    { p: new THREE.Vector3(0,  0, 12),    l: new THREE.Vector3(0,  0, 0) },       // hero (photo covers canvas)
+    { p: new THREE.Vector3(4,  2,  4),    l: new THREE.Vector3(8,  -6, -6) },     // black hole
+    { p: new THREE.Vector3(-2, 4,  0),    l: new THREE.Vector3(-10, 4, -8) },     // supernova
+    { p: new THREE.Vector3(6,  2, -2),    l: new THREE.Vector3(10, 2, -10) },     // planet & moons
+    { p: new THREE.Vector3(-3, 0, -4),    l: new THREE.Vector3(-9, -4, -12) },    // nebula
+    { p: new THREE.Vector3(0,  3, -8),    l: new THREE.Vector3(0,  0, -30) }      // outer rim
+  ];
+  const idx = Math.min(Math.floor(phase), camPath.length - 2);
+  const local = phase - idx;
+  const ease = local * local * (3 - 2 * local);
+  const a = camPath[idx], b = camPath[idx + 1];
+  camera.position.lerpVectors(a.p, b.p, ease);
+  camera.position.x += pointer.x * 0.6;
+  camera.position.y += pointer.y * 0.4;
+  const lookAt = new THREE.Vector3().lerpVectors(a.l, b.l, ease);
+  camera.lookAt(lookAt);
+
+  if (composer) composer.render();
+  else renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Smooth-scroll for nav anchors (override default to use ease)
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) {
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Close the mobile menu after navigating
+      if (document.body.classList.contains('menu-open')) {
+        document.body.classList.remove('menu-open');
+        const tog = document.getElementById('menu-toggle');
+        if (tog) tog.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+});
+
+// Mobile menu hamburger toggle
+(() => {
+  const tog = document.getElementById('menu-toggle');
+  if (!tog) return;
+  tog.addEventListener('click', () => {
+    const open = document.body.classList.toggle('menu-open');
+    tog.setAttribute('aria-expanded', String(open));
+  });
+})();
+</script>
+</body>
+</html>
